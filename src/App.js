@@ -13,8 +13,8 @@ import Layout from "./Layout";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
-import PrivateRoute from "./PrivateRoute";
-import Dashboard from "./Dashboard";
+import CompleteTask from "./CompleteTask";
+import UserTasksList from "./UserTasksList";
 
 const MainApp = () => {
   return (
@@ -29,17 +29,29 @@ const MainApp = () => {
         <Route path="/work-details" element={<WorkDetails />} />
         <Route path="/faqs" element={<FAQs />} />
       </Routes>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <Footer />
     </>
   );
 };
 
+// const DashboardApp = () => {
+//   return (
+//     <Routes>
+//       <Route path="/*" element={<Layout />} />
+//     </Routes>
+//   );
+// };
+
 const DashboardApp = () => {
   return (
-    <Routes>
-      <Route path="/*" element={<Layout />} />
-    </Routes>
+    <Layout>
+      <Routes>
+        <Route path="complete-task" element={<CompleteTask />} />
+        <Route path="user-tasks-list" element={<UserTasksList />} />
+        {/* Add other dashboard routes here */}
+      </Routes>
+    </Layout>
   );
 };
 
@@ -54,6 +66,7 @@ const App = () => {
           element={<PrivateRoute element={<Dashboard />} />}
         /> */}
       </Routes>
+      <ToastContainer />
     </Router>
   );
 };
