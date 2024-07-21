@@ -1,47 +1,3 @@
-// import React from "react";
-// import { Navigate } from "react-router-dom";
-// // import './Dashboard.css';
-
-// const Dashboard = () => {
-//   return (
-//     <div className="dashboard">
-//       <header className="header">
-//         <div className="logo">
-//           <h1>Angel Data</h1>
-//         </div>
-//         <div className="user-menu">
-//           <div className="dropdown">
-//             <button className="dropbtn">▼</button>
-//             <div className="dropdown-content">
-//               <a href="#logout">Logout</a>
-//             </div>
-//             <span className="username">User</span>
-//           </div>
-//         </div>
-//       </header>
-//       <h1>Home</h1>
-//       <p>Welcome !</p>
-//       <div className="stats">
-//         <div className="stat-box assigned">
-//           <h2>700</h2>
-//           <p>Total Tasks Assigned</p>
-//         </div>
-//         <div className="stat-box pending">
-//           <h2>0</h2>
-//           <p>Total Pending Tasks</p>
-//         </div>
-//         <div className="stat-box completed">
-//           <h2>700</h2>
-//           <p>Total Completed Tasks</p>
-//         </div>
-//         <div className="stat-box in-progress">
-//           <h2>0</h2>
-//           <p>On-Progress Tasks</p>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { getUserTasksUrl } from "./services/urls"; // Import the URL function
@@ -94,7 +50,10 @@ const Dashboard = () => {
 
     fetchTasks();
   }, [userId]); // Only run once when userId is available
-
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setRedirect(true);
+  };
   if (redirect) {
     return <Navigate to="/login" />;
   }
@@ -118,7 +77,9 @@ const Dashboard = () => {
           <div className="dropdown">
             <button className="dropbtn">▼</button>
             <div className="dropdown-content">
-              <a href="#logout">Logout</a>
+              <a href="/" onClick={handleLogout}>
+                Logout
+              </a>
             </div>
             <span className="username">User</span>
           </div>

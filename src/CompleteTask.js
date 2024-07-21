@@ -100,6 +100,10 @@ const CompleteTask = () => {
     setLoading(false);
     console.log("Form submitted:", formData);
   };
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login"); // Redirect to login page
+  };
 
   return (
     <>
@@ -111,7 +115,9 @@ const CompleteTask = () => {
           <div className="dropdown">
             <button className="dropbtn">▼</button>
             <div className="dropdown-content">
-              <a href="#logout">Logout</a>
+              <a href="" onClick={handleLogout}>
+                Logout
+              </a>
             </div>
             <span className="username">User</span>
           </div>
