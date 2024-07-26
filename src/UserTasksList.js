@@ -6,8 +6,10 @@ import { getUserTasksUrl } from "./services/urls"; // Import the URL function
 import { jwtDecode } from "jwt-decode";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const UserTaskTable = () => {
+  const navigate = useNavigate();
   const [tasks, setTasks] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10); // Number of items per page
@@ -22,6 +24,9 @@ const UserTaskTable = () => {
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
+        if (decodedToken.user.isAgree !== true) {
+          navigate("/dashboard/sign-agreement");
+        }
         return decodedToken.user.id; // Adjust based on your token structure
       } catch (e) {
         setError("Invalid token");

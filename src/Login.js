@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { loginUrl } from "./services/urls";
 import { toast } from "react-toastify";
+import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -21,7 +22,12 @@ const Login = () => {
         if (response.status === 200) {
           toast.success("Login successful");
           localStorage.setItem("token", response.data.token);
-          navigate("/dashboard"); // Redirect to dashboard
+          const decodedToken = jwtDecode(response.data.token);
+          if (decodedToken.user.isAgree === true) {
+            return navigate("/dashboard"); // Redirect to dashboard
+          }
+          // toast.warn("Please upload sign");
+          navigate("/dashboard/sign-agreement");
         }
       }
     } catch (error) {

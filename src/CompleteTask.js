@@ -11,7 +11,11 @@ const CompleteTask = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
-      navigate("/login"); // Redirect to login if no token
+      return navigate("/login"); // Redirect to login if no token
+    }
+    const decodedToken = jwtDecode(token);
+    if (decodedToken.user.isAgree !== true) {
+      return navigate("/dashboard/sign-agreement");
     }
   }, [navigate]);
 

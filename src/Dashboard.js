@@ -5,6 +5,7 @@ import { jwtDecode } from "jwt-decode"; // Corrected import statement
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [tasks, setTasks] = useState([]);
@@ -12,6 +13,7 @@ const Dashboard = () => {
   const [error, setError] = useState(null);
   const [redirect, setRedirect] = useState(false);
   const [userId, setUserId] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const checkToken = () => {
@@ -21,6 +23,9 @@ const Dashboard = () => {
       } else {
         try {
           const decodedToken = jwtDecode(token);
+          if (decodedToken.user.isAgree !== true) {
+            return navigate("/dashboard/sign-agreement");
+          }
           setUserId(decodedToken.user.id);
         } catch (e) {
           setError("Invalid token");
